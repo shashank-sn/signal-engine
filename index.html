@@ -781,17 +781,18 @@
     /* ============================================================
        RESPONSIVE
     ============================================================ */
+
+    /* Tablet (600px–900px): 2-col pillars, stacked inside layout with 2-col cards */
     @media (max-width: 900px) {
       .pillars__grid {
-        grid-template-columns: 1fr;
-        max-width: 480px;
-        margin: 0 auto;
+        grid-template-columns: repeat(2, 1fr);
       }
       .inside__layout {
         grid-template-columns: 1fr;
       }
       .inside__grid {
-        grid-template-columns: 1fr;
+        /* Keep 2-col cards when the outer layout stacks — they have full width now */
+        grid-template-columns: repeat(2, 1fr);
       }
       .step {
         grid-template-columns: 52px 1fr;
@@ -799,14 +800,26 @@
       }
     }
 
+    /* Mobile (≤600px): everything single column */
     @media (max-width: 600px) {
       :root { --nav-h: 56px; }
 
-      .nav__wordmark { font-size: 0.85rem; }
+      /* Nav: tighten wordmark + button so they don't overflow */
+      .nav__wordmark { font-size: 0.82rem; letter-spacing: 0.03em; }
+      .nav .btn-primary { padding: 10px 18px; font-size: 0.8rem; }
+
+      /* General buttons */
       .btn-primary { font-size: 0.875rem; padding: 14px 24px; }
 
+      /* Hero */
       .hero__headline { font-size: clamp(2.4rem, 11vw, 4rem); }
+      /* Let the sub-headline reflow naturally — the forced <br> looks bad on mobile */
+      .hero__sub br { display: none; }
 
+      /* Pillars: collapse to single column */
+      .pillars__grid { grid-template-columns: 1fr; }
+
+      /* Framework steps */
       .step {
         grid-template-columns: 1fr;
         gap: 16px;
@@ -820,12 +833,20 @@
       .step__ghost { display: none; }
       .step__connector { display: none; }
 
+      /* Inside cards: single column on mobile */
       .inside__grid { grid-template-columns: 1fr; }
 
+      /* Footer */
       .footer__inner {
         flex-direction: column;
         text-align: center;
       }
+    }
+
+    /* Very small phones (≤380px): extra safety for nav overflow */
+    @media (max-width: 380px) {
+      .nav__wordmark { font-size: 0.75rem; }
+      .nav .btn-primary { padding: 9px 14px; font-size: 0.75rem; }
     }
   </style>
 </head>
